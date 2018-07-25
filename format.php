@@ -57,3 +57,9 @@ if (!empty($displaysection)) {
 } else {
     $renderer->print_multiple_section_page($course, null, null, null, null);
 }
+
+// Include course format js module
+//$PAGE->requires->js_call_amd('format_topicstabs/format', 'init');
+// uncomment pour activer format.js
+// .. mais c pas top. Pour ne pas avoir toujours le Tab initial ouvert (marqué ou 1),
+// il faut enregistrer dans les preferences user (voir ex. du filtre dans blocks/course_ets)
