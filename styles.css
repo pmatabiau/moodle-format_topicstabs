@@ -1,0 +1,65 @@
+.course-content .topicstabs {
+  margin: 0;
+  list-style: none;
+}
+.course-content .topicstabs .nav-tabs {
+  margin-top: .7rem;
+}
+/*.course-content .topicstabs .nav-item .tabcurrent {
+  border-left-color: #1177d1;
+}*/
+.course-content .topicstabs .nav-link.tabcurrent::before {
+  content: "\f08d";
+  font-family: FontAwesome;
+  display: inline-block;
+  padding-right: .2rem;
+  height: 1em;
+}
+.course-content .topicstabs .nav-link.muted {
+  color: grey;
+}
+.topicstabs .nav-tabs .nav-link {
+  border-right-color: #dee2e6;
+}
+.topicstabs .nav-tabs .nav-item:last-child .nav-link {
+  border-right-color: transparent;
+}
+.topicstabs .nav-link {
+  padding: .3rem .7rem;
+}
+.topicstabs :target {
+  padding-top: 66px!important;
+}
+.course-content .topicstabs .section {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.course-content .topicstabs .section.main {
+  margin-top: 0;
+}
+
+.course-content .topicstabs .section .left,
+.course-content .topicstabs .section .right {
+  width: 40px;
+  padding: 0 6px;
+}
+
+.course-content .topicstabs .section .left {
+  padding-top: 22px;
+  text-align: right;
+}
+
+.jsenabled .course-content .topicstabs .section .left,
+.jsenabled .course-content .topicstabs .section .right {
+  width: auto;
+}
+
+.course-content .topicstabs .section .left .section-handle img.icon {
+  padding: 0;
+  vertical-align: baseline;
+}
+
+.course-content .topicstabs .section .section_action_menu .textmenu,
+.course-content .topicstabs .section .section_action_menu .menu-action-text {
+  white-space: nowrap;
+}
