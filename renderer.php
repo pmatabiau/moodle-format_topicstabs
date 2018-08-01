@@ -56,6 +56,8 @@ class format_topicstabs_renderer extends format_topics_renderer {
 
     // if edition mode, use topics course format
     if ($PAGE->user_is_editing() || $course->coursedisplay == COURSE_DISPLAY_MULTIPAGE) {
+      // Include course format js module
+      $PAGE->requires->js('/course/format/topics/format.js');
       return parent::print_multiple_section_page($course, $sections, $mods, $modnames, $modnamesused);
     }
 
