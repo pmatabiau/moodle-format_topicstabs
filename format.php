@@ -57,3 +57,6 @@ if (!empty($displaysection)) {
 } else {
     $renderer->print_multiple_section_page($course, null, null, null, null);
 }
+
+// Include course format js module
+$PAGE->requires->js_call_amd('format_topicstabs/actions', 'init', [$course->id]);

@@ -18,17 +18,37 @@
 .course-content .topicstabs .nav-link.muted {
   color: grey;
 }
+.course-content .topicstabs .nav-link.muted::before {
+  content: "\f070";
+  font-family: FontAwesome;
+  display: inline-block;
+  padding-right: .2rem;
+  height: 1em;
+}
 .topicstabs .nav-tabs .nav-link {
-  border-right-color: #dee2e6;
+  background-color: #f5f5f5;
+	border-radius: .5em .5em 0 0;
 }
-.topicstabs .nav-tabs .nav-item:last-child .nav-link {
+.topicstabs .nav-tabs .nav-link.active {
+	color: white;
+	background-image: linear-gradient(#f23c3c, #f23c3c, transparent);
+	padding-top: .1rem; padding-bottom: .5rem;
+}
+.topicstabs .nav-tabs .nav-link.muted.active {
+	color: lightgray;
+}
+.topicstabs .nav-tabs .nav-item {
+	margin-right: 3px;
+	padding-top: 3px;
+}
+/*.topicstabs .nav-tabs .nav-item:last-child .nav-link {
   border-right-color: transparent;
-}
+}*/
 .topicstabs .nav-link {
   padding: .3rem .7rem;
 }
 .topicstabs :target {
-  padding-top: 66px!important;
+  /*padding-top: 66px!important;*/
 }
 .course-content .topicstabs .section {
   padding-top: 1rem;
