@@ -90,6 +90,7 @@ class format_topicstabs_renderer extends format_topics_renderer {
     }
 
     $this->hydrate_sections($modinfo, $_course);
+		$o['sections'] = null;
     foreach ($this->aSections as $sectionNum => $sectionInfos) {
       if ($sectionInfos['display'] == FALSE)
         continue;
@@ -245,7 +246,7 @@ class format_topicstabs_renderer extends format_topics_renderer {
     // but there is some available info text which explains the reason & should display,
     // OR it is hidden but the course has a setting to display hidden sections as unavilable.
     $showsection = $thissection->uservisible ||
-        ($thissection->visible && !$thissection->available && !empty($thissection->availableinfo)) ||
+        ($thissection->visible && !$thissection->available && (!empty($thissection->availableinfo) && $course->hiddensections != 2)) ||
         (!$thissection->visible && !$course->hiddensections);
     if (!$showsection)
       return false;

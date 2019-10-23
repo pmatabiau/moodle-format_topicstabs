@@ -39,6 +39,21 @@ require_once($CFG->dirroot. '/course/format/topics/lib.php');
  */
 class format_topicstabs extends format_topics {
 
+	public function course_format_options($foreditform = false) {
+		$courseformatoptions = parent::course_format_options($foreditform);
+		if ($foreditform) {
+			$courseformatoptions['hiddensections']['element_attributes'] = [
+				[
+					0 => new lang_string('hiddensectionscollapsed', 'format_topicstabs'),
+					1 => new lang_string('hiddensectionsinvisible'),
+					2 => new lang_string('restrictedsectionsinvisible', 'format_topicstabs'),
+				]
+			];
+			unset($courseformatoptions['coursedisplay']['element_attributes'][0][COURSE_DISPLAY_MULTIPAGE]);
+		}
+		return $courseformatoptions;
+	}
+
 }
 
 /**

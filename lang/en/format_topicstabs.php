@@ -38,3 +38,5 @@ $string['page-course-view-topics-x'] = 'Any course page in topics format';
 $string['hidefromothers'] = 'Hide topic';
 $string['showfromothers'] = 'Show topic';
 $string['privacy:metadata'] = 'The Topics format plugin does not store any personal data.';
+$string['hiddensectionscollapsed'] = 'Hidden or restricted sections are shown in collapsed form';
+$string['restrictedsectionsinvisible'] = 'Restricted sections are completely invisible';

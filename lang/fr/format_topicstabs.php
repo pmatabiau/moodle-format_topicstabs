@@ -38,3 +38,5 @@ $string['page-course-view-topics-x'] = 'Toutes les pages de cours au format par 
 $string['hidefromothers'] = 'Cacher la section';
 $string['showfromothers'] = 'Afficher la section';
 $string['privacy:metadata'] = 'Le format Par onglets Boostrap n\'enregistre aucune donnée personelle.';
+$string['hiddensectionscollapsed'] = 'Les sections cachées ou restreintes sont montrées dans leur forme raccourcie';
+$string['restrictedsectionsinvisible'] = 'Les sections restreintes sont complètement invisibles';
