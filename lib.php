@@ -17,11 +17,11 @@
 /**
  * This file contains main class for the course format TopicTabs
  *
- * @package    format
- * @subpackage topicstabs
- * @author Philippe MATABIAU
- * @copyright 2018 ÉTS Montréal {@link http://etsmtl.ca}
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package			format
+ * @subpackage	topicstabs
+ * @author			Philippe MATABIAU
+ * @copyright		2023 ÉTS Montréal {@link http://etsmtl.ca}
+ * @license			http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -52,6 +52,25 @@ class format_topicstabs extends format_topics {
 			unset($courseformatoptions['coursedisplay']['element_attributes'][0][COURSE_DISPLAY_MULTIPAGE]);
 		}
 		return $courseformatoptions;
+	}
+
+	/**
+	 * Returns if an specific section is visible to the current user.
+	 *
+	 * Formats can overrride this method to implement any special section logic.
+	 *
+	 * @param section_info $section the section modinfo
+	 * @return bool;
+	 */
+	public function is_section_visible(section_info $section): bool {
+		$course				 = $this->get_course();
+		$hidesections	 = $course->hiddensections ?? true;
+		// Show the section if the user is permitted to access it, OR if it's not available
+		// but there is some available info text which explains the reason & should display,
+		// OR it is hidden but the course has a setting to display hidden sections as unavailable.
+		return $section->uservisible ||
+				($section->visible && !$section->available && (!empty($section->availableinfo) && $course->hiddensections != 2)) ||
+				(!$section->visible && !$hidesections);
 	}
 
 }

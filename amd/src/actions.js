@@ -16,41 +16,38 @@
 /**
  * Various actions on course format
  *
- * @package    format
- * @subpackage topicstabs
- * @module     format_topicstabs/actions
- * @author Philippe MATABIAU
- * @copyright 2019 ÉTS Montréal {@link http://etsmtl.ca}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @since      2019050100
- */
+ * @package			format
+ * @subpackage	topicstabs
+ * @module			format_topicstabs/actions
+ * @author			Philippe MATABIAU
+ * @copyright		2023 ÉTS Montréal {@link http://etsmtl.ca}
+ * @license			http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @since				2023021300
+*/
 
 define(['jquery', 'core/ajax'], function ($, ajax) {
-	var getCookieValue = function (a) {
-		var b = document.cookie.match('(^|[^;]+)\\s*' + a + '\\s*=\\s*([^;]+)');
-		return b ? b.pop() : '';
-	};
-
 	return {
 		init: function (courseId) {
-			require(['theme_boost/tab'], function () { // obligé de charger tab, sinon $(..).tab not exist
+			require(['theme_boost/bootstrap/tab'], function () { // obligé de charger tab, sinon $(..).tab not exist
 				$(function () { // = shortcut for 'document ready'
-					var cookiePrefix = 'mdl_topicstabs_', section = '';
-					// Priorities: 1. hash, 2. cookie(max-age=1h), ... puis selon page PHP (section marquee ou sect-1)
-					var hash = $(location).attr('hash');
-					if (hash.substr(1, 8) === 'section-') {
-						section = hash;
-					} else {
-						section = getCookieValue(cookiePrefix + courseId);
-					}
-					$('.topicstabs .nav-tabs li a[href="' + section + '"]').tab('show');
+					var section = '#section-0'; // Val par defaut
 
-					// comportements
-					$('.nav-tabs li a').on("click", function () {
-						var section = $(this).attr('href');
-						$(location).attr('hash', section);
-						// set cookie idCourse_topicstab=hash
-						document.cookie = cookiePrefix + courseId + '=' + section + '; max-age=' + 60 * 60;
+					if ($('.topicstabs .nav-tabs .nav-item a.tabcurrent').length > 0) // Section marquée existe
+						section = $('.topicstabs .nav-tabs .nav-item a.tabcurrent').attr("href");
+
+					var hash = $(location).attr('hash');
+					if (hash.substr(1, 8) === 'section-') // Si section dans le hash de l'URL
+						section = hash;
+
+					// Priorities: 1. hash, 2. section marquée, 3. defaut (section-1)
+					$('.topicstabs .nav-tabs .nav-item a[href="' + section + '"]').tab('show');
+
+					// Comportements
+					$('.topicstabs .nav-tabs .nav-item a').on("click", function () {
+						$(location).attr('hash', $(this).attr('href'));
+					});
+					$(window).on('hashchange', function () {
+						$('.topicstabs .nav-tabs .nav-item a[href="' + $(location).attr('hash') + '"]').tab('show');
 					});
 				});
 			});

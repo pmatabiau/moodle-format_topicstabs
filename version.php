@@ -17,19 +17,19 @@
 /**
  * Version details
  *
- * @package    format
- * @subpackage topicstabs
- * @author Philippe MATABIAU
- * @copyright 2018 ÉTS Montréal {@link http://etsmtl.ca}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package			format
+ * @subpackage	topicstabs
+ * @author			Philippe MATABIAU
+ * @copyright		2023 ÉTS Montréal {@link http://etsmtl.ca}
+ * @license			http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2019102100;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires  = 2018050800;        // Requires this Moodle version.
+$plugin->version   = 2025082700;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->requires  = 2024100701;        // Requires this Moodle version.
 $plugin->component = 'format_topicstabs';    // Full name of the plugin (used for diagnostics).
 $plugin->maturity = MATURITY_STABLE;
 $plugin->dependencies = [
-  'format_topics' => 2018051400,
+  'format_topics' => 2024100700,
 ];

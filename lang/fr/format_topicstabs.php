@@ -17,11 +17,11 @@
 /**
  * Strings for component 'format_topicstabs', language 'fr'
  *
- * @package    format
- * @subpackage topicstabs
- * @author Philippe MATABIAU
- * @copyright 2018 ÉTS Montréal {@link http://etsmtl.ca}
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package			format
+ * @subpackage	topicstabs
+ * @author			Philippe MATABIAU
+ * @copyright		2023 ÉTS Montréal {@link http://etsmtl.ca}
+ * @license			http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['pluginname'] = 'Par onglets Bootstrap';

@@ -5,36 +5,19 @@
 .course-content .topicstabs .nav-tabs {
   margin-top: .7rem;
 }
-/*.course-content .topicstabs .nav-item .tabcurrent {
-  border-left-color: #1177d1;
-}*/
-.course-content .topicstabs .nav-link.tabcurrent::before {
-  content: "\f08d";
-  font-family: FontAwesome;
-  display: inline-block;
-  padding-right: .2rem;
-  height: 1em;
-}
-.course-content .topicstabs .nav-link.muted {
+.course-content .topicstabs .nav-item .nav-link.muted {
   color: grey;
-}
-.course-content .topicstabs .nav-link.muted::before {
-  content: "\f070";
-  font-family: FontAwesome;
-  display: inline-block;
-  padding-right: .2rem;
-  height: 1em;
 }
 .topicstabs .nav-tabs .nav-link {
   background-color: #f5f5f5;
 	border-radius: .5em .5em 0 0;
 }
-.topicstabs .nav-tabs .nav-link.active {
+.topicstabs .nav-tabs .nav-item .nav-link.active {
 	color: white;
 	background-image: linear-gradient(#f23c3c, #f23c3c, transparent);
 	padding-top: .1rem; padding-bottom: .5rem;
 }
-.topicstabs .nav-tabs .nav-link.muted.active {
+.topicstabs .nav-tabs .nav-item .nav-link.muted.active {
 	color: lightgray;
 }
 .topicstabs .nav-tabs .nav-item {
