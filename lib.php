@@ -15,81 +15,135 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * This file contains main class for the course format TopicTabs
+ * Topics with tabs course format: extends the core format_topics.
  *
- * @package			format
- * @subpackage	topicstabs
- * @author			Philippe MATABIAU
- * @copyright		2023 ÉTS Montréal {@link http://etsmtl.ca}
- * @license			http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package		format_topicstabs
+ * @author		Philippe Matabiau
+ * @copyright	2026 ÉTS Montréal {@link http://etsmtl.ca}
+ * @license		http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot. '/course/format/topics/lib.php');
+require_once($CFG->dirroot . '/course/format/topics/lib.php');
 
 /**
- * Main class for the TopicsTabs course format
+ * Main class for the Topics with tabs course format.
  *
- * @package    format
- * @subpackage topicstabs
- * @author Philippe MATABIAU
- * @copyright 2018 ÉTS Montréal {@link http://etsmtl.ca}
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * Everything (sections, activities, editing, course index, completion...) is inherited
+ * from format_topics. This class only adds the options specific to the tabbed display.
+ *
+ * @package    format_topicstabs
  */
 class format_topicstabs extends format_topics {
 
+	/** @var string Classic tabs look. */
+	public const TABSSTYLE_TABS = 'tabs';
+
+	/** @var string Pills look. */
+	public const TABSSTYLE_PILLS									= 'pills';
+
+	public const HIDDENSECTIONS_COLLAPSED					= 0;
+	public const HIDDENSECTIONS_HIDDEN_HIDDEN			= 1;
+	public const HIDDENSECTIONS_RESTRICTED_HIDDEN = 2;
+
+	/**
+	 * Course format options: all those of format_topics, plus the tabs style.
+	 *
+	 * @param bool $foreditform
+	 * @return array
+	 */
+	#[\Override]
 	public function course_format_options($foreditform = false) {
-		$courseformatoptions = parent::course_format_options($foreditform);
+		$options = parent::course_format_options($foreditform);
+
 		if ($foreditform) {
-			$courseformatoptions['hiddensections']['element_attributes'] = [
-				[
-					0 => new lang_string('hiddensectionscollapsed', 'format_topicstabs'),
-					1 => new lang_string('hiddensectionsinvisible'),
-					2 => new lang_string('restrictedsectionsinvisible', 'format_topicstabs'),
-				]
-			];
-			unset($courseformatoptions['coursedisplay']['element_attributes'][0][COURSE_DISPLAY_MULTIPAGE]);
+			// Modification des options existantes pour l'affichages des sections cachées/restreintes.
+			// Remplace le texte de l'option valeur 0 (sections montrées forme raccourcie).
+			$options['hiddensections']['element_attributes'][0]->add_option(
+					self::HIDDENSECTIONS_COLLAPSED,
+					new lang_string('hiddensectionscollapsed', 'format_topicstabs'),
+					[
+						'description' => new lang_string('hiddensectionscollapsed_description'),
+					],
+			);
+			// Ajoute l'option valeur 2 (sections restreintes cachées).
+			$options['hiddensections']['element_attributes'][0]->add_option(
+					self::HIDDENSECTIONS_RESTRICTED_HIDDEN,
+					new lang_string('restrictedsectionsinvisible', 'format_topicstabs'),
+					[
+						'description' => new lang_string('restrictedsectionsinvisible_description', 'format_topicstabs'),
+					],
+			);
+
+			// Ajout d'une option pour le style des onglets (classics ou pastilles).
+//			$options['tabsstyle']												= [
+//				'default' => self::TABSSTYLE_TABS,
+//				'type'		=> PARAM_ALPHA,
+//			];
+//			$options['tabsstyle']['label']							= new lang_string('tabsstyle', 'format_topicstabs');
+//			$options['tabsstyle']['help']								= 'tabsstyle';
+//			$options['tabsstyle']['help_component']			= 'format_topicstabs';
+//			$options['tabsstyle']['element_type']				= 'select';
+//			$options['tabsstyle']['element_attributes'] = [
+//				[
+//					self::TABSSTYLE_TABS	=> new lang_string('tabsstyle_tabs', 'format_topicstabs'),
+//					self::TABSSTYLE_PILLS => new lang_string('tabsstyle_pills', 'format_topicstabs'),
+//				],
+//			];
 		}
-		return $courseformatoptions;
+		return $options;
 	}
 
 	/**
 	 * Returns if an specific section is visible to the current user.
 	 *
-	 * Formats can overrride this method to implement any special section logic.
-	 *
 	 * @param section_info $section the section modinfo
 	 * @return bool;
 	 */
+	#[\Override]
 	public function is_section_visible(section_info $section): bool {
-		$course				 = $this->get_course();
-		$hidesections	 = $course->hiddensections ?? true;
-		// Show the section if the user is permitted to access it, OR if it's not available
-		// but there is some available info text which explains the reason & should display,
-		// OR it is hidden but the course has a setting to display hidden sections as unavailable.
-		return $section->uservisible ||
-				($section->visible && !$section->available && (!empty($section->availableinfo) && $course->hiddensections != 2)) ||
-				(!$section->visible && !$hidesections);
-	}
+		// It is unlikely that a section is orphan, but it needs to be checked.
+		if ($section->is_orphan() && !has_capability('moodle/course:viewhiddensections', $this->get_context())) {
+			return false;
+		}
+		// Déjà visible pour cet utilisateur : rien à décider.
+		if ($section->uservisible) {
+			return true;
+		}
 
+		$hidesections = (int) $this->get_course()->hiddensections;
+
+		// Masquée par l'enseignant : affichée (grisée) seulement si l'option du cours le permet.
+		if (!$section->visible) {
+			return $hidesections === self::HIDDENSECTIONS_COLLAPSED;
+		}
+
+		// Visible mais restreinte par des conditions : affichée avec son message de disponibilité,
+		// sauf si l'option du cours demande de la masquer.
+		return !empty($section->availableinfo) && $hidesections !== self::HIDDENSECTIONS_RESTRICTED_HIDDEN;
+	}
 }
 
 /**
- * Implements callback inplace_editable() allowing to edit values in-place
+ * Implements callback inplace_editable() allowing to edit section names in place.
+ *
+ * Required because the component of the inplace editable is the format itself.
  *
  * @param string $itemtype
  * @param int $itemid
  * @param mixed $newvalue
- * @return \core\output\inplace_editable
+ * @return \core\output\inplace_editable|null
  */
 function format_topicstabs_inplace_editable($itemtype, $itemid, $newvalue) {
-    global $DB, $CFG;
-    require_once($CFG->dirroot . '/course/lib.php');
-    if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
-        $section = $DB->get_record_sql(
-            'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
-            array($itemid, 'topicstabs'), MUST_EXIST);
-        return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
-    }
+	global $DB, $CFG;
+	require_once($CFG->dirroot . '/course/lib.php');
+	if ($itemtype === 'sectionname' || $itemtype === 'sectionnamenl') {
+		$section = $DB->get_record_sql(
+				'SELECT s.* FROM {course_sections} s JOIN {course} c ON s.course = c.id WHERE s.id = ? AND c.format = ?',
+				[$itemid, 'topicstabs'],
+				MUST_EXIST
+		);
+		return course_get_format($section->course)->inplace_editable_update_section_name($section, $itemtype, $newvalue);
+	}
 }

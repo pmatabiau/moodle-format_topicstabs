@@ -15,28 +15,38 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'format_topicstabs', language 'fr'
+ * Strings for format_topicstabs (French).
  *
- * @package			format
- * @subpackage	topicstabs
- * @author			Philippe MATABIAU
- * @copyright		2023 ÉTS Montréal {@link http://etsmtl.ca}
- * @license			http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package		format_topicstabs
+ * @author		Philippe Matabiau
+ * @copyright	2026 ÉTS Montréal {@link http://etsmtl.ca}
+ * @license		http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Par onglets Bootstrap';
+defined('MOODLE_INTERNAL') || die();
+
+$string['pluginname'] = 'Par onglets';
 $string['addsections'] = 'Ajouter une section';
-$string['currentsection'] = 'Cette section';
+$string['currentsection'] = 'Ce thème';
 $string['editsection'] = 'Editer la section';
 $string['editsectionname'] = 'Editer le nom de la section';
 $string['deletesection'] = 'Supprimer la section';
 $string['newsectionname'] = 'Nouveau nom pour la section {$a}';
 $string['sectionname'] = 'Section';
 $string['section0name'] = 'Général';
-$string['page-course-view-topics'] = 'Toutes les pages principales de cours au format par onglets';
-$string['page-course-view-topics-x'] = 'Toutes les pages de cours au format par onglets';
+$string['page-course-view-topicstabs'] = 'Toutes les pages principales de cours au format Par onglets';
+$string['page-course-view-topicstabs-x'] = 'Toutes les pages de cours au format Par onglets';
 $string['hidefromothers'] = 'Cacher la section';
+$string['privacy:metadata'] = 'Le format de cours Par onglets ne stocke aucune donnée personnelle.';
 $string['showfromothers'] = 'Afficher la section';
-$string['privacy:metadata'] = 'Le format Par onglets Boostrap n\'enregistre aucune donnée personelle.';
+
 $string['hiddensectionscollapsed'] = 'Les sections cachées ou restreintes sont montrées dans leur forme raccourcie';
-$string['restrictedsectionsinvisible'] = 'Les sections restreintes sont complètement invisibles';
+$string['hiddensectionscollapsed_description'] = '';
+$string['restrictedsectionsinvisible'] = 'Les sections cachées ou restreintes sont complètement invisibles';
+$string['restrictedsectionsinvisible_description'] = 'Les sections cachées ou restreintes ne sont pas affichées aux étudiants';
+$string['restrictedsection'] = 'Section restreinte';
+
+$string['tabsstyle'] = 'Style des onglets';
+$string['tabsstyle_help'] = 'Style visuel de la navigation qui permet de passer d’un thème à l’autre.';
+$string['tabsstyle_pills'] = 'Pastilles';
+$string['tabsstyle_tabs'] = 'Onglets';

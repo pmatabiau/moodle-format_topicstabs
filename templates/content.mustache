@@ -14,58 +14,53 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+{{!
+    @template format_topicstabs/content
 
+    Course page of the Topics with tabs format (outside editing mode).
+    The tabs and the tab panes are rendered here, from the sections exported by Moodle, so that
+    they always match. Each section is rendered by the standard core_courseformat section template.
+
+    Context variables required for this template:
+    * title - course title
+    * completionhelp - completion help
+    * format - course format name (topicstabs)
+    * uniqid - unique id of the page
+    * sectionreturn - section number to return to
+    * initialsection - general section (section 0), displayed above the tabs
+    * sections - other sections, each with num and tabactive
+    * hastabs, navclass, topicstabs - see format_topicstabs/tabs
+}}
 <div id="{{uniqid}}-course-format">
     <h2 class="accesshide">{{{title}}}</h2>
     {{{completionhelp}}}
-		<div class='{{format}}'>
-			<div data-for="course_sectionlist">
-					{{#initialsection}}
-							{{$ format_topicstabs/content/section }}
-									{{> format_topicstabs/content/section }}
-							{{/ format_topicstabs/content/section }}
-					{{/initialsection}}
-				<div class="tab-content">
-					<!-- Nav tabs -->
-					{{> format_topicstabs/tabs }}
-					<!-- Tab panes -->
-					{{#sections}}
-							{{$ format_topicstabs/content/section }}
-									{{> format_topicstabs/content/section }}
-							{{/ format_topicstabs/content/section }}
-					{{/sections}}
-				</div>
-			</div>
-		</div>
-    {{#hasnavigation}}
-    <div class="single-section">
-        {{#sectionnavigation}}
-            {{$ core_courseformat/local/content/sectionnavigation }}
-                {{> core_courseformat/local/content/sectionnavigation }}
-            {{/ core_courseformat/local/content/sectionnavigation }}
-        {{/sectionnavigation}}
-        <ul class="{{format}}">
-        {{#singlesection}}
-            {{$ core_courseformat/local/content/section }}
-                {{> core_courseformat/local/content/section }}
-            {{/ core_courseformat/local/content/section }}
-        {{/singlesection}}
-        </ul>
-        {{#sectionselector}}
-            {{$ core_courseformat/local/content/sectionselector }}
-                {{> core_courseformat/local/content/sectionselector }}
-            {{/ core_courseformat/local/content/sectionselector }}
-        {{/sectionselector}}
+    <div class="topicstabs-container" data-region="topicstabs" data-for="course_sectionlist">
+        {{#initialsection}}
+            <ul class="{{format}}">
+                {{> core_courseformat/local/content/section}}
+            </ul>
+        {{/initialsection}}
+        {{#hastabs}}
+            <div class="topicstabs-navwrapper">
+                {{> format_topicstabs/tabs}}
+            </div>
+        {{/hastabs}}
+        <div class="tab-content topicstabs-content">
+            {{#sections}}
+                <div class="tab-pane {{#tabactive}}show active{{/tabactive}}"
+                     id="topicstabs-pane-{{num}}"
+                     role="tabpanel"
+                     aria-labelledby="topicstabs-tab-{{num}}">
+                    <ul class="{{format}}">
+                        {{> core_courseformat/local/content/section}}
+                    </ul>
+                </div>
+            {{/sections}}
+        </div>
     </div>
-    {{/hasnavigation}}
-    {{#numsections}}
-        {{$ core_courseformat/local/content/addsection}}
-            {{> core_courseformat/local/content/addsection}}
-        {{/ core_courseformat/local/content/addsection}}
-    {{/numsections}}
 </div>
 {{#js}}
-require(['core_courseformat/local/content'], function(component) {
-    component.init('{{uniqid}}-course-format', {}, {{sectionreturn}});
-});
+    require(['core_courseformat/local/content'], function(component) {
+        component.init('{{uniqid}}-course-format', {}, {{sectionreturn}});
+    });
 {{/js}}

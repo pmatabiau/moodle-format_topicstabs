@@ -1,0 +1,32 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+namespace format_topicstabs\courseformat;
+
+use format_topics\courseformat\stateactions as topics_stateactions;
+
+/**
+ * Contains the core course state actions specific to the Topics with tabs format.
+ *
+ * The course editor looks for format_<name>\courseformat\stateactions without following format
+ * inheritance, so the Topics actions (section_highlight, section_unhighlight...) are inherited here.
+ *
+ * @package    format_topicstabs
+ * @copyright  2026 Your name <you@example.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class stateactions extends topics_stateactions {
+}

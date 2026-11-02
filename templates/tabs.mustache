@@ -14,15 +14,54 @@
     You should have received a copy of the GNU General Public License
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
+{{!
+    @template format_topicstabs/tabs
 
-<ul role="tablist" class="nav nav-tabs" style="list-style: outside none none">
+    Navigation tabs of the Topics with tabs course format.
+    Tab switching is done by Bootstrap (data-bs-toggle="tab"); the format_topicstabs/tabs AMD module only
+    handles the URL hash (#section-N) and the last visited tab.
+
+    Context variables required for this template:
+    * navclass - nav-tabs or nav-pills
+    * topicstabs - array of tabs: num, name, active, marked, dimmed, hidden, restricted
+
+    Example context (json):
+    {
+        "navclass": "nav-tabs",
+        "topicstabs": [
+            {"num": 1, "name": "Topic 1", "active": true, "marked": false, "dimmed": false, "hidden": false, "restricted": false},
+            {"num": 2, "name": "Topic 2", "active": false, "marked": true, "dimmed": false, "hidden": false, "restricted": false},
+            {"num": 3, "name": "Topic 3", "active": false, "marked": false, "dimmed": true, "hidden": false, "restricted": true}
+        ]
+    }
+}}
+<ul role="tablist" class="nav {{navclass}} topicstabs-nav">
     {{#topicstabs}}
-		<li class="nav-item">
-			<a class="nav-link {{active}} {{marked}} {{muted}}" data-toggle="tab" href="#section-{{num}}">
-				{{#muted}}<i class="fa-regular fa-eye-slash fa-sm fa-fw" aria-hidden="true"></i>{{/muted}}
-				{{#marked}}<i class="fa-solid fa-thumbtack fa-sm fa-fw" aria-hidden="true"></i>{{/marked}}
-				{{name}}
-			</a>
-		</li>
-		{{/topicstabs}}
+    <li class="nav-item" role="presentation">
+        <a class="nav-link {{#active}}active{{/active}} {{#marked}}marked{{/marked}} {{#dimmed}}dimmed{{/dimmed}}"
+           id="topicstabs-tab-{{num}}"
+           role="tab"
+           href="#section-{{num}}"
+           data-bs-toggle="tab"
+           data-bs-target="#topicstabs-pane-{{num}}"
+           data-section-number="{{num}}"
+           aria-controls="topicstabs-pane-{{num}}"
+           aria-selected="{{#active}}true{{/active}}{{^active}}false{{/active}}"
+           {{^active}}tabindex="-1"{{/active}}>
+            {{#hidden}}
+                <i class="fa-regular fa-eye-slash fa-sm fa-fw" aria-hidden="true"></i>
+                <span class="visually-hidden">{{#str}}hiddenfromstudents{{/str}}</span>
+            {{/hidden}}
+            {{#restricted}}
+                <i class="fa-solid fa-lock fa-sm fa-fw" aria-hidden="true"></i>
+                <span class="visually-hidden">{{#str}}restrictedsection, format_topicstabs{{/str}}</span>
+            {{/restricted}}
+            {{#marked}}
+                <i class="fa-solid fa-thumbtack fa-sm fa-fw" aria-hidden="true"></i>
+                <span class="visually-hidden">{{#str}}currentsection, format_topicstabs{{/str}}</span>
+            {{/marked}}
+            {{name}}
+        </a>
+    </li>
+    {{/topicstabs}}
 </ul>

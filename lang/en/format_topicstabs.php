@@ -15,28 +15,38 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'format_topicstabs', language 'en'
+ * Strings for format_topicstabs (English).
  *
- * @package			format
- * @subpackage	topicstabs
- * @author			Philippe MATABIAU
- * @copyright		2023 ÉTS Montréal {@link http://etsmtl.ca}
- * @license			http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package		format_topicstabs
+ * @author		Philippe Matabiau
+ * @copyright	2026 ÉTS Montréal {@link http://etsmtl.ca}
+ * @license		http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Boostrap TopicsTabs format';
-$string['addsections'] = 'Add topics';
-$string['currentsection'] = 'This topic';
-$string['editsection'] = 'Edit topic';
-$string['editsectionname'] = 'Edit topic name';
-$string['deletesection'] = 'Delete topic';
-$string['newsectionname'] = 'New name for topic {$a}';
+defined('MOODLE_INTERNAL') || die();
+
+$string['pluginname'] = 'Topics with tabs';
+$string['addsections'] = 'Add a section';
+$string['currentsection'] = 'This format';
+$string['editsection'] = 'Edit this section';
+$string['editsectionname'] = 'Edit the section name';
+$string['deletesection'] = 'Delete this section';
+$string['newsectionname'] = 'New name for the section {$a}';
 $string['sectionname'] = 'Topic';
 $string['section0name'] = 'General';
-$string['page-course-view-topics'] = 'Any course main page in topics format';
-$string['page-course-view-topics-x'] = 'Any course page in topics format';
+$string['page-course-view-topicstabs'] = 'Any course main page in Topics with tabs format';
+$string['page-course-view-topicstabs-x'] = 'Any course page in Topics with tabs format';
 $string['hidefromothers'] = 'Hide topic';
+$string['privacy:metadata'] = 'The Topics with tabs course format plugin does not store any personal data.';
 $string['showfromothers'] = 'Show topic';
-$string['privacy:metadata'] = 'The Topics format plugin does not store any personal data.';
-$string['hiddensectionscollapsed'] = 'Hidden or restricted sections are shown in collapsed form';
+
+$string['hiddensectionscollapsed'] = 'Hidden or restricted sections are shown in their shortened form';
+$string['hiddensectionscollapsed_description'] = '';
 $string['restrictedsectionsinvisible'] = 'Restricted sections are completely invisible';
+$string['restrictedsectionsinvisible_description'] = 'Hidden or restricted sections are not shown';
+$string['restrictedsection'] = 'Restricted section';
+
+$string['tabsstyle'] = 'Tabs style';
+$string['tabsstyle_help'] = 'Visual style of the navigation which lets learners switch between topics.';
+$string['tabsstyle_pills'] = 'Pills';
+$string['tabsstyle_tabs'] = 'Tabs';
